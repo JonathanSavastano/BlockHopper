@@ -22,6 +22,10 @@
         var player;
         // create variable for the y position
         var playerYPosition = 200;
+        // fallspeed variable
+        var fallSpeed = 0;
+        // create new interval
+        var interval = setInterval(updateCanvas, 20);
 
         function startGame() {
             gameCanvas.start();
@@ -29,17 +33,37 @@
             player = new createPlayer(30, 30, 10);
         }
 
+        // create the player
         function createPlayer(width, height, x) {
             this.width = width;
             this.height = height;
             this.x = x;
             this.y = playerYPosition;
 
-            ctx = gameCanvas.context;
-            ctx.fillStyle = "green";
-            ctx.fillRect(this.x, this.y, this.width, this.height);
+            // draw player
+            this.draw = function () {
+                ctx = gameCanvas.context;
+                ctx.fillStyle = "green";
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            }
+
+            // fall function
+            this.makeFall = function () {
+                this.y += fallSpeed;
+                fallspeed += 0.1;
+            }
         }
 
+        // tick function for updating canvas
+        function updateCanvas () {
+            ctx = gameCanvas.context;
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+            player.makeFall();
+            player.draw();
+        }
+
+        // create the game canvas
         var gameCanvas = {
             canvas: document.createElement("canvas"),
             start: function () {
