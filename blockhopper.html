@@ -14,11 +14,30 @@
   <body onload="startGame()">
     <h1>Block Hopper</h1>
     <script>
+        // setup the canvas
         var canvasWidth = 600;
         var canvasHeight = 400;
 
+        // create player variable
+        var player;
+        // create variable for the y position
+        var playerYPosition = 200;
+
         function startGame() {
             gameCanvas.start();
+            // create player using function
+            player = new createPlayer(30, 30, 10);
+        }
+
+        function createPlayer(width, height, x) {
+            this.width = width;
+            this.height = height;
+            this.x = x;
+            this.y = playerYPosition;
+
+            ctx = gameCanvas.context;
+            ctx.fillStyle = "green";
+            ctx.fillRect(this.x, this.y, this.width, this.height);
         }
 
         var gameCanvas = {
